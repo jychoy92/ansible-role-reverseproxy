@@ -1,0 +1,25 @@
+---
+- name: Install Nginx Package
+  yum:
+    name: nginx
+    state: present
+  register: nginx_installed
+
+- name: Start Nginx Service
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+  when: nginx_installed.changed
+
+# - name: Copy Nginx Configuration
+#   copy:
+#     src: files/nginx.conf
+#     dest: /etc/nginx/nginx.conf
+#     owner: root
+#     group: root
+#     mode: 0644
+
+# - name: Reload Nginx Configuration
+#   shell: nginx -s reload
+#   when: nginx_installed.changed
